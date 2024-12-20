@@ -36,6 +36,7 @@ export default function ComandasPage() {
         })}
       </div>
       <CommandDetails
+        closeCommandDetails={() => setSelectedTable(0)}
         selectedTable={selectedTable}
         command={selectedCommandData}
       />

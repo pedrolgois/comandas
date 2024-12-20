@@ -44,7 +44,7 @@ export function SidebarNav() {
         }`}
       ></div>
       <nav
-        className={`bg-system-red px-4 py-8 h-screen fixed flex flex-col transition-all duration-300 ${
+        className={`bg-system-red p-4 h-screen fixed flex flex-col transition-all duration-300 ${
           isOpen ? "w-[320px]" : "w-[96px]"
         }`}
       >

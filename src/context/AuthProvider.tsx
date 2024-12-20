@@ -1,10 +1,10 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 // Types
 import { User } from "@/models/user";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 type AuthContextType = {
   user: User | null;
@@ -17,12 +17,12 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
+  // const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    router.push("/login");
-  }, []);
+  // useEffect(() => {
+  //   router.push("/login");
+  // }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
