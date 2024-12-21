@@ -8,7 +8,7 @@ export default function RootLayout({
     <CommandsProvider>
       <div className="flex">
         <SidebarNav />
-        <main className="p-4">{children}</main>
+        <main className="p-4 w-full">{children}</main>
       </div>
     </CommandsProvider>
   );

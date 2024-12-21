@@ -7,18 +7,27 @@ import { TextInput } from "./Form/TextInput";
 
 // Types
 import { Command } from "@/models/command";
-import { CalendarIcon, CloseIcon, TrashIcon } from "../../public/icons";
+import {
+  AddIcon,
+  CalendarIcon,
+  CloseIcon,
+  TrashIcon,
+} from "../../public/icons";
 
 interface CommandDetailsProps {
-  selectedTable: number;
-  closeCommandDetails: () => void;
   command?: Command;
+  selectedTable: number;
+  closeCommandDetailsAction: () => void;
+  addItemsToCommandAction?: () => void;
+  closeCommandAction?: () => void;
 }
 
 export function CommandDetails({
   command,
   selectedTable,
-  closeCommandDetails,
+  addItemsToCommandAction,
+  closeCommandDetailsAction,
+  closeCommandAction,
 }: CommandDetailsProps) {
   const [clientName, setClientName] = useState(command?.client || "");
 
@@ -28,7 +37,7 @@ export function CommandDetails({
         className={`bg-black fixed left-0 right-0 top-0 bottom-0 ${
           selectedTable == 0 ? "opacity-0 pointer-events-none" : "opacity-30"
         }`}
-        onClick={closeCommandDetails}
+        onClick={closeCommandDetailsAction}
       />
       <div
         className={`bg-system-grey1 p-4 h-screen w-[600px] min-w-[600px] flex flex-col fixed right-0 top-0 bottom-0 ${
@@ -36,7 +45,7 @@ export function CommandDetails({
         } transition-transform duration-300`}
       >
         <button
-          onClick={closeCommandDetails}
+          onClick={closeCommandDetailsAction}
           className="ml-auto block hover:bg-system-grey2 p-2 rounded"
         >
           <CloseIcon />
@@ -90,12 +99,37 @@ export function CommandDetails({
                   </td>
                 </tr>
               ))}
+              {addItemsToCommandAction && (
+                <tr>
+                  <td className="border border-system-grey4" colSpan={4}>
+                    <button
+                      className="h-[36px] flex items-center justify-center w-full  bg-system-grey2 hover:bg-system-grey3 transition-all duration-200"
+                      onClick={addItemsToCommandAction}
+                    >
+                      <AddIcon />
+                    </button>
+                  </td>
+                </tr>
+              )}
+              <tr className="bg-system-grey4 border border-system-grey4">
+                <td colSpan={2} className="px-2 py-1 text-white">
+                  Subtotal
+                </td>
+                <td
+                  colSpan={2}
+                  className="px-2 py-1 border-l border-system-white text-center font-semibold text-white"
+                >
+                  R$ {command?.subtotal}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div className="flex justify-center mt-2">
-          <Button>Fechar comanda</Button>
-        </div>
+        {closeCommandAction && (
+          <div className="flex justify-center mt-2">
+            <Button action={closeCommandAction}>Fechar comanda</Button>
+          </div>
+        )}
       </div>
     </>
   );

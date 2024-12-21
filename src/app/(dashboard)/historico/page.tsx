@@ -1,6 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
-import { CommandsContext } from "@/context/CommandProvider";
+import { useState } from "react";
 import { CommandDetails } from "@/components/CommandDetails";
 import { Command } from "@/models/command";
 import { EyeIcon } from "../../../../public/icons";
@@ -22,19 +21,19 @@ const mockCommands: Command[] = [
     selectedTable: 2,
     products: [],
     openedAt: "2023-10-01 13:00",
-    closedAt: null,
+    closedAt: "2023-10-01 18:00",
   },
   {
     id: "3",
     client: "João",
-    status: "active",
+    status: "paid",
     selectedTable: 1,
     products: [
       { id: "2", ammount: 2, price: 15.99 },
       { id: "3", ammount: 2, price: 15.99 },
     ],
     openedAt: "2023-10-01 14:00",
-    closedAt: null,
+    closedAt: "2023-10-01 2:00",
   },
   {
     id: "4",
@@ -47,12 +46,11 @@ const mockCommands: Command[] = [
       { id: "6", ammount: 2, price: 15.99 },
     ],
     openedAt: "2023-10-01 15:00",
-    closedAt: null,
+    closedAt: "2023-10-01 21:00",
   },
 ];
 
 export default function HistoricoPage() {
-  const commandsStore = useContext(CommandsContext);
   const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
 
   const handleViewDetails = (command: Command) => {

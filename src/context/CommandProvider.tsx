@@ -16,9 +16,10 @@ const initialCommands: Command[] = [
     status: "active",
     client: "João",
     products: [
-      { id: "1", ammount: 2 },
-      { id: "2", ammount: 1 },
+      { id: "1", ammount: 2, price: 10 },
+      { id: "2", ammount: 1, price: 5 },
     ],
+    subtotal: "25",
     openedAt: "2022-01-01",
     selectedTable: 1,
   },
@@ -28,9 +29,10 @@ const initialCommands: Command[] = [
     client: "Maria",
     openedAt: "2022-01-01",
     products: [
-      { id: "1", ammount: 2 },
-      { id: "2", ammount: 1 },
+      { id: "1", ammount: 2, price: 10 },
+      { id: "2", ammount: 1, price: 5 },
     ],
+    subtotal: "25",
     selectedTable: 7,
   },
 ];

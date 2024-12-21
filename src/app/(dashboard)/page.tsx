@@ -7,10 +7,17 @@ import { CommandDetails } from "@/components/CommandDetails";
 
 // Stores
 import { CommandsContext } from "@/context/CommandProvider";
+import { AddProductModal } from "@/components/AddProductModal";
+import { ProductsContext } from "@/context/ProductProvider";
 
 export default function ComandasPage() {
   const commandsStore = useContext(CommandsContext);
+  const { productsState } = useContext(ProductsContext);
+
   const [selectedTable, setSelectedTable] = useState<number>(0);
+  const [openAddProductModal, setOpenAddProductModal] =
+    useState<boolean>(false);
+
   const ammount = 20;
 
   const selectedCommandData = commandsStore.commands?.find(
@@ -36,10 +43,19 @@ export default function ComandasPage() {
         })}
       </div>
       <CommandDetails
-        closeCommandDetails={() => setSelectedTable(0)}
+        closeCommandDetailsAction={() => setSelectedTable(0)}
         selectedTable={selectedTable}
         command={selectedCommandData}
+        addItemsToCommandAction={() => setOpenAddProductModal((prev) => !prev)}
       />
+      {openAddProductModal && (
+        <AddProductModal
+          products={productsState.products}
+          closeAddProductModalAction={() =>
+            setOpenAddProductModal((prev) => !prev)
+          }
+        />
+      )}
     </div>
   );
 }

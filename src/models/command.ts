@@ -6,7 +6,9 @@ export type Command = {
   products: {
     id: string;
     ammount: number;
+    price: number;
   }[];
+  subtotal: string;
 
   openedAt: string;
   closedAt?: string;
