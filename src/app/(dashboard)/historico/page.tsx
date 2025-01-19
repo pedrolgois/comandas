@@ -13,6 +13,7 @@ const mockCommands: Command[] = [
     products: [{ id: "1", ammount: 2, price: 15.99 }],
     openedAt: "2023-10-01 12:00",
     closedAt: "2023-10-01 14:00",
+    subtotal: "31.98",
   },
   {
     id: "2",
@@ -22,6 +23,7 @@ const mockCommands: Command[] = [
     products: [],
     openedAt: "2023-10-01 13:00",
     closedAt: "2023-10-01 18:00",
+    subtotal: "0",
   },
   {
     id: "3",
@@ -34,6 +36,7 @@ const mockCommands: Command[] = [
     ],
     openedAt: "2023-10-01 14:00",
     closedAt: "2023-10-01 2:00",
+    subtotal: "63.96",
   },
   {
     id: "4",
@@ -47,6 +50,7 @@ const mockCommands: Command[] = [
     ],
     openedAt: "2023-10-01 15:00",
     closedAt: "2023-10-01 21:00",
+    subtotal: "95.94",
   },
 ];
 
@@ -132,7 +136,7 @@ export default function HistoricoPage() {
       >
         {selectedCommand && (
           <CommandDetails
-            closeCommandDetails={() => setSelectedCommand(null)}
+            closeCommandDetailsAction={() => setSelectedCommand(null)}
             selectedTable={selectedCommand.selectedTable}
             command={selectedCommand}
           />

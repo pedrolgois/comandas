@@ -224,16 +224,16 @@ export const EyeIcon = (props: IconProps) => (
     <path
       d="M1.3756 10.3757C1.29407 10.1339 1.29407 9.87198 1.3756 9.63017C2.99377 4.76167 7.58694 1.25 13.0003 1.25C18.4113 1.25 23.0021 4.75817 24.6238 9.62433C24.7054 9.86583 24.7054 10.1272 24.6238 10.3698C23.0068 15.2383 18.4136 18.75 13.0003 18.75C7.58927 18.75 2.99727 15.2418 1.3756 10.3757Z"
       stroke="black"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.5 10C16.5 10.9283 16.1313 11.8185 15.4749 12.4749C14.8185 13.1313 13.9283 13.5 13 13.5C12.0717 13.5 11.1815 13.1313 10.5251 12.4749C9.86875 11.8185 9.5 10.9283 9.5 10C9.5 9.07174 9.86875 8.1815 10.5251 7.52513C11.1815 6.86875 12.0717 6.5 13 6.5C13.9283 6.5 14.8185 6.86875 15.4749 7.52513C16.1313 8.1815 16.5 9.07174 16.5 10Z"
       stroke="black"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
