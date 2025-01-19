@@ -7,14 +7,14 @@ import { AddIcon } from "../../../../public/icons";
 
 export default function ProdutosPage() {
   const { productsState } = useContext(ProductsContext);
-
   const products = productsState.products;
+
   return (
     <div className="flex flex-col gap-6 w-full flex-1">
       <div className="flex justify-between">
         <div />
         <Button>
-          <span>Adicionar produto</span>{" "}
+          <span>Adicionar produto</span>
           <AddIcon className="[&>*]:fill-white" />
         </Button>
       </div>

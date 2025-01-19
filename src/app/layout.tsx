@@ -9,8 +9,9 @@ const MontserratFont = Montserrat({
 });
 
 // Metadata
-import type { Metadata } from "next";
 import { AuthProvider } from "@/context/AuthProvider";
+import { ProductsProvider } from "@/context/ProductProvider";
+import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sistema de Comandas",
   description: "Sistema de gerenciamento de comandas",
@@ -21,9 +22,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <AuthProvider>
-      <html lang="pt-BR">
-        <body className={`${MontserratFont.className}`}>{children}</body>
-      </html>
+      <ProductsProvider>
+        <html lang="pt-BR">
+          <body className={`${MontserratFont.className}`}>{children}</body>
+        </html>
+      </ProductsProvider>
     </AuthProvider>
   );
 }
