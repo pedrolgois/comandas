@@ -1,12 +1,12 @@
 import { OrderIcon, UserIcon } from "../../public/icons";
 
-interface CommandCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface TabCardProps extends React.HTMLAttributes<HTMLDivElement> {
   status: "active" | "available";
   title: string;
-  client?: string;
+  customer?: string;
 }
 
-export function CommandCard(props: CommandCardProps) {
+export function TabCard(props: TabCardProps) {
   const bgColor = props.status === "active" ? "red" : "lightGrey";
   const textColor = props.status === "active" ? "white" : "black";
   return (
@@ -26,10 +26,10 @@ export function CommandCard(props: CommandCardProps) {
           <span className={`text-2xl font-bold text-system-${textColor}`}>
             {props.title}
           </span>
-          {props.client && (
+          {props.customer && (
             <div className="flex gap-1 text-white">
               <UserIcon className={`fill-transparent`} />
-              <span>{props.client}</span>
+              <span>{props.customer}</span>
             </div>
           )}
         </div>

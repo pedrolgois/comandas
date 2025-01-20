@@ -1,14 +1,14 @@
-export type Command = {
+export type Tab = {
   id: string;
-  client: string;
-  status: "active"| "paid" | "cancelled" | "pending";
-  selectedTable: number;
-  products: {
+  customer: string;
+  status: "active" | "paid" | "cancelled" | "pending";
+  tableNumber: number;
+  items: {
     id: string;
     ammount: number;
-    price: number;
+    subtotal: number;
   }[];
-  subtotal: string;
+  total: number;
 
   openedAt: string;
   closedAt?: string;
@@ -26,9 +26,9 @@ export type Product = {
 
   createdAt?: string;
   updatedAt?: string;
-}
+};
 
 export type Group = {
   id: string;
   name: string;
-}
+};

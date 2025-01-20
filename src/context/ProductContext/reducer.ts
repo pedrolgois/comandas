@@ -1,4 +1,4 @@
-import { Product } from "@/models/command";
+import { Product } from "@/models/tab";
 import * as types from "./types";
 
 export type ProductStateType = {

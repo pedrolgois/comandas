@@ -2,16 +2,16 @@
 import { useContext, useState } from "react";
 
 // Components
-import { CommandCard } from "@/components/CommandCard";
-import { CommandDetails } from "@/components/CommandDetails";
+import { TabCard } from "@/components/TabCard";
+import { TabDetails } from "@/components/TabDetails";
 
 // Stores
-import { CommandsContext } from "@/context/CommandProvider";
 import { AddProductModal } from "@/components/AddProductModal";
 import { ProductsContext } from "@/context/ProductProvider";
+import { TabsContext } from "@/context/TabProvider";
 
 export default function ComandasPage() {
-  const commandsStore = useContext(CommandsContext);
+  const tabsStore = useContext(TabsContext);
   const { productsState } = useContext(ProductsContext);
 
   const [selectedTable, setSelectedTable] = useState<number>(0);
@@ -20,33 +20,33 @@ export default function ComandasPage() {
 
   const ammount = 20;
 
-  const selectedCommandData = commandsStore.commands?.find(
-    (command) => command.selectedTable === selectedTable
+  const selectedTabData = tabsStore.tabs?.find(
+    (tab) => tab.tableNumber === selectedTable
   );
 
   return (
     <div className="flex gap-6 items-start">
       <div className="flex flex-wrap gap-4">
         {Array.from({ length: ammount }, (_, index) => {
-          const command = commandsStore.commands?.find(
-            (command) => command.selectedTable === index + 1
+          const tab = tabsStore.tabs?.find(
+            (tab) => tab.tableNumber === index + 1
           );
           return (
-            <CommandCard
+            <TabCard
               key={index}
               title={`Mesa ${String(index + 1).padStart(2, "0")}`}
-              status={command?.status ? "active" : "available"}
-              client={command?.client}
+              status={tab?.status ? "active" : "available"}
+              customer={tab?.customer}
               onClick={() => setSelectedTable(index + 1)}
             />
           );
         })}
       </div>
-      <CommandDetails
-        closeCommandDetailsAction={() => setSelectedTable(0)}
-        selectedTable={selectedTable}
-        command={selectedCommandData}
-        addItemsToCommandAction={() => setOpenAddProductModal((prev) => !prev)}
+      <TabDetails
+        closeTabDetailsAction={() => setSelectedTable(0)}
+        tableNumber={selectedTable}
+        tab={selectedTabData}
+        addItemsToTabAction={() => setOpenAddProductModal((prev) => !prev)}
       />
       {openAddProductModal && (
         <AddProductModal

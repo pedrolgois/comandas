@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 // components
+import { Product } from "@/models/tab";
 import { AddIcon } from "../../public/icons";
 import { Button } from "./Button";
-import { Product } from "@/models/command";
 
 interface AddProductModalProps {
   products: Product[];

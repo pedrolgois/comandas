@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/models/command";
+import { Product } from "@/models/tab";
 import Image from "next/image";
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {

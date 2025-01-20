@@ -1,71 +1,23 @@
 "use client";
+import { TabDetails } from "@/components/TabDetails";
+import { useTabs } from "@/context/TabProvider";
+import { Tab } from "@/models/tab";
 import { useState } from "react";
-import { CommandDetails } from "@/components/CommandDetails";
-import { Command } from "@/models/command";
 import { EyeIcon } from "../../../../public/icons";
 
-const mockCommands: Command[] = [
-  {
-    id: "1",
-    client: "Pedro",
-    status: "paid",
-    selectedTable: 1,
-    products: [{ id: "1", ammount: 2, price: 15.99 }],
-    openedAt: "2023-10-01 12:00",
-    closedAt: "2023-10-01 14:00",
-    subtotal: "31.98",
-  },
-  {
-    id: "2",
-    client: "Vinicius",
-    status: "cancelled",
-    selectedTable: 2,
-    products: [],
-    openedAt: "2023-10-01 13:00",
-    closedAt: "2023-10-01 18:00",
-    subtotal: "0",
-  },
-  {
-    id: "3",
-    client: "João",
-    status: "paid",
-    selectedTable: 1,
-    products: [
-      { id: "2", ammount: 2, price: 15.99 },
-      { id: "3", ammount: 2, price: 15.99 },
-    ],
-    openedAt: "2023-10-01 14:00",
-    closedAt: "2023-10-01 2:00",
-    subtotal: "63.96",
-  },
-  {
-    id: "4",
-    client: "Maria",
-    status: "pending",
-    selectedTable: 7,
-    products: [
-      { id: "4", ammount: 2, price: 15.99 },
-      { id: "5", ammount: 2, price: 15.99 },
-      { id: "6", ammount: 2, price: 15.99 },
-    ],
-    openedAt: "2023-10-01 15:00",
-    closedAt: "2023-10-01 21:00",
-    subtotal: "95.94",
-  },
-];
-
 export default function HistoricoPage() {
-  const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
+  const { tabs: tabs } = useTabs();
+  const [selectedTab, setSelectedTab] = useState<Tab | null>(null);
 
-  const handleViewDetails = (command: Command) => {
-    setSelectedCommand(command);
+  const handleViewDetails = (tab: Tab) => {
+    setSelectedTab(tab);
   };
 
   const calculateTotalAmount = (
-    products: { id: string; ammount: number; price: number }[]
+    items: { id: string; ammount: number; subtotal: number }[]
   ) => {
-    const total = products.reduce(
-      (total, product) => total + product.ammount * product.price,
+    const total = items.reduce(
+      (total, item) => total + item.ammount * item.subtotal,
       0
     );
     return `R$ ${total.toFixed(2).replace(".", ",")}`;
@@ -88,32 +40,30 @@ export default function HistoricoPage() {
           </tr>
         </thead>
         <tbody>
-          {mockCommands.map((command) => (
-            <tr key={command.id}>
+          {tabs.map((tab) => (
+            <tr key={tab.id}>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {command.id}
+                {tab.id}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {command.selectedTable}
+                {tab.tableNumber}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {command.openedAt}
+                {tab.openedAt}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {command.closedAt || "N/A"}
+                {tab.closedAt || "N/A"}
               </td>
               <td className="py-2 px-4 border border-gray-300">
-                {command.client}
+                {tab.customer}
               </td>
-              <td className="py-2 px-4 border border-gray-300">
-                {command.status}
-              </td>
+              <td className="py-2 px-4 border border-gray-300">{tab.status}</td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {calculateTotalAmount(command.products)}
+                {calculateTotalAmount(tab.items)}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
                 <button
-                  onClick={() => handleViewDetails(command)}
+                  onClick={() => handleViewDetails(tab)}
                   className="flex items-center justify-center w-full hover:scale-90 transition-all duration-100"
                 >
                   <EyeIcon fill="transparent" />
@@ -125,20 +75,20 @@ export default function HistoricoPage() {
       </table>
       <div
         className={`bg-black fixed left-0 right-0 top-0 bottom-0 ${
-          selectedCommand ? "opacity-30" : "opacity-0 pointer-events-none"
+          selectedTab ? "opacity-30" : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => setSelectedCommand(null)}
+        onClick={() => setSelectedTab(null)}
       />
       <div
         className={`bg-system-grey1 p-4 h-screen w-[600px] min-w-[600px] flex flex-col fixed right-0 top-0 bottom-0 ${
-          selectedCommand ? "translate-x-0" : "translate-x-full"
+          selectedTab ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
-        {selectedCommand && (
-          <CommandDetails
-            closeCommandDetailsAction={() => setSelectedCommand(null)}
-            selectedTable={selectedCommand.selectedTable}
-            command={selectedCommand}
+        {selectedTab && (
+          <TabDetails
+            closeTabDetailsAction={() => setSelectedTab(null)}
+            tableNumber={selectedTab.tableNumber}
+            tab={selectedTab}
           />
         )}
       </div>

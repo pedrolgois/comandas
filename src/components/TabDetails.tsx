@@ -6,7 +6,7 @@ import { Button } from "./Button";
 import { TextInput } from "./Form/TextInput";
 
 // Types
-import { Command } from "@/models/command";
+import { Tab } from "@/models/tab";
 import {
   AddIcon,
   CalendarIcon,
@@ -14,59 +14,59 @@ import {
   TrashIcon,
 } from "../../public/icons";
 
-interface CommandDetailsProps {
-  command?: Command;
-  selectedTable: number;
-  closeCommandDetailsAction: () => void;
-  addItemsToCommandAction?: () => void;
-  closeCommandAction?: () => void;
+interface TabDetailsProps {
+  tab?: Tab;
+  tableNumber: number;
+  closeTabDetailsAction: () => void;
+  addItemsToTabAction?: () => void;
+  closeTabAction?: () => void;
 }
 
-export function CommandDetails({
-  command,
-  selectedTable,
-  addItemsToCommandAction,
-  closeCommandDetailsAction,
-  closeCommandAction,
-}: CommandDetailsProps) {
-  const [clientName, setClientName] = useState(command?.client || "");
+export function TabDetails({
+  tab: tab,
+  tableNumber: tableNumber,
+  addItemsToTabAction: addItemsToTabAction,
+  closeTabDetailsAction: closeTabDetailsAction,
+  closeTabAction: closeTabAction,
+}: TabDetailsProps) {
+  const [customerName, setCustomerName] = useState(tab?.customer || "");
 
   return (
     <>
       <div
         className={`bg-black fixed left-0 right-0 top-0 bottom-0 ${
-          selectedTable == 0 ? "opacity-0 pointer-events-none" : "opacity-30"
+          tableNumber == 0 ? "opacity-0 pointer-events-none" : "opacity-30"
         }`}
-        onClick={closeCommandDetailsAction}
+        onClick={closeTabDetailsAction}
       />
       <div
         className={`bg-system-grey1 p-4 h-screen w-[600px] min-w-[600px] flex flex-col fixed right-0 top-0 bottom-0 ${
-          selectedTable == 0 ? "translate-x-full" : "translate-x-0"
+          tableNumber == 0 ? "translate-x-full" : "translate-x-0"
         } transition-transform duration-300`}
       >
         <button
-          onClick={closeCommandDetailsAction}
+          onClick={closeTabDetailsAction}
           className="ml-auto block hover:bg-system-grey2 p-2 rounded"
         >
           <CloseIcon />
         </button>
         <span className="text-md font-bold -mb-2 text-black">Comanda</span>
         <span className="text-[40px] font-bold text-black">
-          Mesa {String(selectedTable).padStart(2, "0")}
+          Mesa {String(tableNumber).padStart(2, "0")}
         </span>
         <div className="flex gap-4">
           <div className="flex justify-between gap-4 px-2 py-1 rounded bg-system-grey3 text-nowrap items-center min-w-[190px]">
             <span className="text-black text-xl font-normal">
-              {command?.openedAt ?? "dd/mm/aaaa"}
+              {tab?.openedAt ?? "dd/mm/aaaa"}
             </span>
             <CalendarIcon />
           </div>
           <TextInput
             id="command-client-name-input"
-            value={clientName}
+            value={customerName}
             placeholder="Cliente"
-            onChange={(newClientValue) =>
-              setClientName(newClientValue.target.value)
+            onChange={(newCustomerValue) =>
+              setCustomerName(newCustomerValue.target.value)
             }
           />
         </div>
@@ -81,7 +81,7 @@ export function CommandDetails({
               </tr>
             </thead>
             <tbody className="bg-system-grey1 text-xl text-black">
-              {command?.products.map((product) => (
+              {tab?.items.map((product) => (
                 <tr key={product.id}>
                   <td className="px-2 py-1 border border-system-grey4 w-full">
                     Produto
@@ -99,12 +99,12 @@ export function CommandDetails({
                   </td>
                 </tr>
               ))}
-              {addItemsToCommandAction && (
+              {addItemsToTabAction && (
                 <tr>
                   <td className="border border-system-grey4" colSpan={4}>
                     <button
                       className="h-[36px] flex items-center justify-center w-full  bg-system-grey2 hover:bg-system-grey3 transition-all duration-200"
-                      onClick={addItemsToCommandAction}
+                      onClick={addItemsToTabAction}
                     >
                       <AddIcon />
                     </button>
@@ -119,15 +119,15 @@ export function CommandDetails({
                   colSpan={2}
                   className="px-2 py-1 border-l border-system-white text-center font-semibold text-white"
                 >
-                  R$ {command?.subtotal}
+                  R$ {tab?.total}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        {closeCommandAction && (
+        {closeTabAction && (
           <div className="flex justify-center mt-2">
-            <Button action={closeCommandAction}>Fechar comanda</Button>
+            <Button action={closeTabAction}>Fechar comanda</Button>
           </div>
         )}
       </div>
