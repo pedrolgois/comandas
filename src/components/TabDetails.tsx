@@ -7,6 +7,7 @@ import { TextInput } from "./Form/TextInput";
 
 // Types
 import { Tab } from "@/models/tab";
+import axios from "axios";
 import {
   AddIcon,
   CalendarIcon,
@@ -28,7 +29,8 @@ export function TabDetails({
   addItemsToTabAction: addItemsToTabAction,
   closeTabDetailsAction: closeTabDetailsAction,
   closeTabAction: closeTabAction,
-}: TabDetailsProps) {
+  fetchTabs,
+}: TabDetailsProps & { fetchTabs: () => Promise<void> }) {
   const [customerName, setCustomerName] = useState(tab?.customer || "");
 
   useEffect(() => {
@@ -38,6 +40,15 @@ export function TabDetails({
       setCustomerName("");
     }
   }, [tab?.customer]);
+
+  async function removeItemFromTab(itemId: number) {
+    try {
+      await axios.delete(`http://localhost:8080/tab-items/${itemId}`);
+      await fetchTabs();
+    } catch (error) {
+      console.error("Erro ao remover item da comanda:", error);
+    }
+  }
 
   return (
     <>
@@ -107,7 +118,10 @@ export function TabDetails({
                     R$ {item.subtotal.toFixed(2)}{" "}
                   </td>
                   <td className="px-2 py-2 border border-system-grey4">
-                    <button className="flex items-center justify-center w-full hover:scale-90 transition-all duration-100">
+                    <button
+                      onClick={() => removeItemFromTab(Number(item.id))}
+                      className="flex items-center justify-center w-full hover:scale-90 transition-all duration-100"
+                    >
                       <TrashIcon fill="transparent" />
                     </button>
                   </td>

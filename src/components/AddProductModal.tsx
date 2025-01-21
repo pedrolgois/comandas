@@ -12,21 +12,6 @@ interface AddProductModalProps {
   closeAddProductModalAction: () => void;
 }
 
-async function addProductToTab(tabId, product) {
-  try {
-    const response = await axios.post("http://localhost:8080/tab-items", {
-      tabId: tabId,
-      productId: product.id,
-      ammount: product.ammount,
-    });
-    if (response.status !== 200) {
-      throw new Error("Erro ao adicionar o produto à comanda");
-    }
-  } catch (error) {
-    console.error("Erro:", error);
-  }
-}
-
 export function AddProductModal({
   tabId,
   products,
@@ -39,6 +24,21 @@ export function AddProductModal({
       ammount: 0,
     }))
   );
+
+  async function addProductToTab(tabId, product) {
+    try {
+      const response = await axios.post("http://localhost:8080/tab-items", {
+        tabId: tabId,
+        productId: product.id,
+        ammount: product.ammount,
+      });
+      if (response.status !== 200) {
+        throw new Error("Erro ao adicionar o produto à comanda");
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+    }
+  }
 
   return (
     <>

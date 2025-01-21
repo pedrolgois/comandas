@@ -11,6 +11,7 @@ const MontserratFont = Montserrat({
 // Metadata
 import { AuthProvider } from "@/context/AuthProvider";
 import { ProductsProvider } from "@/context/ProductProvider";
+import { TabProvider } from "@/context/TabProvider";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sistema de Comandas",
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <ProductsProvider>
-        <html lang="pt-BR">
-          <body className={`${MontserratFont.className}`}>{children}</body>
-        </html>
+        <TabProvider>
+          <html lang="pt-BR">
+            <body className={`${MontserratFont.className}`}>{children}</body>
+          </html>
+        </TabProvider>
       </ProductsProvider>
     </AuthProvider>
   );

@@ -47,6 +47,7 @@ export default function ComandasPage() {
         tableNumber={selectedTable}
         tab={selectedTabData}
         addItemsToTabAction={() => setOpenAddProductModal((prev) => !prev)}
+        fetchTabs={tabsStore.fetchTabs}
       />
       {openAddProductModal && (
         <AddProductModal
