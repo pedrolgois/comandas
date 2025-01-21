@@ -2,18 +2,37 @@ import { useState } from "react";
 
 // components
 import { Product } from "@/models/tab";
+import axios from "axios";
 import { AddIcon } from "../../public/icons";
 import { Button } from "./Button";
 
 interface AddProductModalProps {
+  tabId: number;
   products: Product[];
   closeAddProductModalAction: () => void;
 }
 
+async function addProductToTab(tabId, product) {
+  try {
+    const response = await axios.post("http://localhost:8080/tab-items", {
+      tabId: tabId,
+      productId: product.id,
+      ammount: product.ammount,
+    });
+    if (response.status !== 200) {
+      throw new Error("Erro ao adicionar o produto à comanda");
+    }
+  } catch (error) {
+    console.error("Erro:", error);
+  }
+}
+
 export function AddProductModal({
+  tabId,
   products,
   closeAddProductModalAction,
-}: AddProductModalProps) {
+  fetchTabs,
+}: AddProductModalProps & { fetchTabs: () => Promise<void> }) {
   const [productsAmmount, setProductsAmmount] = useState(
     products.map((product) => ({
       id: product.id,
@@ -84,7 +103,19 @@ export function AddProductModal({
             </div>
           );
         })}
-        <Button action={closeAddProductModalAction}>Concluir</Button>
+        <Button
+          action={async () => {
+            for (const product of productsAmmount) {
+              if (product.ammount > 0) {
+                await addProductToTab(tabId, product);
+              }
+            }
+            await fetchTabs();
+            closeAddProductModalAction();
+          }}
+        >
+          Concluir
+        </Button>
       </div>
     </>
   );

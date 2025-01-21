@@ -5,6 +5,7 @@ export type Tab = {
   tableNumber: number;
   items: {
     id: string;
+    name: string;
     ammount: number;
     subtotal: number;
   }[];

@@ -50,10 +50,12 @@ export default function ComandasPage() {
       />
       {openAddProductModal && (
         <AddProductModal
+          tabId={Number(selectedTabData?.id)}
           products={productsState.products}
           closeAddProductModalAction={() =>
             setOpenAddProductModal((prev) => !prev)
           }
+          fetchTabs={tabsStore.fetchTabs}
         />
       )}
     </div>

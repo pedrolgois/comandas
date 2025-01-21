@@ -26,7 +26,8 @@ export const TabProvider: React.FC<{ children: React.ReactNode }> = ({
         status: tab.status,
         tableNumber: tab.tableNumber,
         items: tab.items.map((item: any) => ({
-          id: item.product.id.toString(),
+          id: item.id.toString(),
+          name: item.product.name,
           ammount: item.ammount,
           subtotal: item.subtotal,
         })),

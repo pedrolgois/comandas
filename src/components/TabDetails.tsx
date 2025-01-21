@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Components
 import { Button } from "./Button";
@@ -31,6 +31,14 @@ export function TabDetails({
 }: TabDetailsProps) {
   const [customerName, setCustomerName] = useState(tab?.customer || "");
 
+  useEffect(() => {
+    if (tab?.customer) {
+      setCustomerName(tab.customer);
+    } else {
+      setCustomerName("");
+    }
+  }, [tab?.customer]);
+
   return (
     <>
       <div
@@ -57,7 +65,13 @@ export function TabDetails({
         <div className="flex gap-4">
           <div className="flex justify-between gap-4 px-2 py-1 rounded bg-system-grey3 text-nowrap items-center min-w-[190px]">
             <span className="text-black text-xl font-normal">
-              {tab?.openedAt ?? "dd/mm/aaaa"}
+              {tab?.openedAt
+                ? new Date(tab.openedAt).toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })
+                : "dd/mm/aaaa"}
             </span>
             <CalendarIcon />
           </div>
@@ -81,16 +95,16 @@ export function TabDetails({
               </tr>
             </thead>
             <tbody className="bg-system-grey1 text-xl text-black">
-              {tab?.items.map((product) => (
-                <tr key={product.id}>
+              {tab?.items.map((item) => (
+                <tr key={item.id}>
                   <td className="px-2 py-1 border border-system-grey4 w-full">
-                    Produto
+                    {item.name}
                   </td>
                   <td className="px-2 py-1 border border-system-grey4 text-center">
-                    2
+                    {item.ammount}
                   </td>
                   <td className="px-2 py-1 border border-system-grey4 text-center">
-                    R$15,99
+                    R$ {item.subtotal.toFixed(2)}{" "}
                   </td>
                   <td className="px-2 py-2 border border-system-grey4">
                     <button className="flex items-center justify-center w-full hover:scale-90 transition-all duration-100">
@@ -99,6 +113,7 @@ export function TabDetails({
                   </td>
                 </tr>
               ))}
+
               {addItemsToTabAction && (
                 <tr>
                   <td className="border border-system-grey4" colSpan={4}>
@@ -119,7 +134,7 @@ export function TabDetails({
                   colSpan={2}
                   className="px-2 py-1 border-l border-system-white text-center font-semibold text-white"
                 >
-                  R$ {tab?.total}
+                  R$ {tab?.total.toFixed(2)}
                 </td>
               </tr>
             </tbody>
