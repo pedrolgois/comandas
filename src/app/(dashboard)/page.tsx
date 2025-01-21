@@ -9,6 +9,7 @@ import { TabDetails } from "@/components/TabDetails";
 import { AddProductModal } from "@/components/AddProductModal";
 import { ProductsContext } from "@/context/ProductProvider";
 import { TabsContext } from "@/context/TabProvider";
+import axios from "axios";
 
 export default function ComandasPage() {
   const tabsStore = useContext(TabsContext);
@@ -20,9 +21,20 @@ export default function ComandasPage() {
 
   const ammount = 20;
 
-  const selectedTabData = tabsStore.tabs?.find(
-    (tab) => tab.tableNumber === selectedTable
-  );
+  async function createTab(tableNumber: number) {
+    try {
+      await axios.post("http://localhost:8080/tabs", {
+        tableNumber,
+        customer: "",
+        openedAt: new Date().toISOString(),
+        status: "active",
+      });
+      await tabsStore.fetchTabs();
+      setSelectedTable(tableNumber);
+    } catch (error) {
+      console.error("Erro ao criar nova comanda:", error);
+    }
+  }
 
   return (
     <div className="flex gap-6 items-start">
@@ -37,7 +49,13 @@ export default function ComandasPage() {
               title={`Mesa ${String(index + 1).padStart(2, "0")}`}
               status={tab?.status ? "active" : "available"}
               customer={tab?.customer}
-              onClick={() => setSelectedTable(index + 1)}
+              onClick={() => {
+                if (!tab) {
+                  createTab(index + 1);
+                } else {
+                  setSelectedTable(index + 1);
+                }
+              }}
             />
           );
         })}
@@ -45,13 +63,15 @@ export default function ComandasPage() {
       <TabDetails
         closeTabDetailsAction={() => setSelectedTable(0)}
         tableNumber={selectedTable}
-        tab={selectedTabData}
+        tab={tabsStore.tabs?.find((tab) => tab.tableNumber === selectedTable)}
         addItemsToTabAction={() => setOpenAddProductModal((prev) => !prev)}
         fetchTabs={tabsStore.fetchTabs}
       />
       {openAddProductModal && (
         <AddProductModal
-          tabId={Number(selectedTabData?.id)}
+          tabId={Number(
+            tabsStore.tabs?.find((tab) => tab.tableNumber === selectedTable)?.id
+          )}
           products={productsState.products}
           closeAddProductModalAction={() =>
             setOpenAddProductModal((prev) => !prev)
