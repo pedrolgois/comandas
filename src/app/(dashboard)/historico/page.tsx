@@ -6,7 +6,7 @@ import { useState } from "react";
 import { EyeIcon } from "../../../../public/icons";
 
 export default function HistoricoPage() {
-  const { tabs: tabs } = useTabs();
+  const { tabs, fetchTabs } = useTabs();
   const [selectedTab, setSelectedTab] = useState<Tab | null>(null);
 
   const handleViewDetails = (tab: Tab) => {
@@ -21,6 +21,19 @@ export default function HistoricoPage() {
       0
     );
     return `R$ ${total.toFixed(2).replace(".", ",")}`;
+  };
+
+  const formatDate = (date: string | undefined) => {
+    if (!date) return "N/A";
+
+    const parsedDate = new Date(date);
+    const day = String(parsedDate.getDate()).padStart(2, "0");
+    const month = String(parsedDate.getMonth() + 1).padStart(2, "0"); // Meses começam do 0
+    const year = parsedDate.getFullYear();
+    const hours = String(parsedDate.getHours()).padStart(2, "0");
+    const minutes = String(parsedDate.getMinutes()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   };
 
   return (
@@ -49,10 +62,10 @@ export default function HistoricoPage() {
                 {tab.tableNumber}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {tab.openedAt}
+                {formatDate(tab.openedAt)}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {tab.closedAt || "N/A"}
+                {formatDate(tab.closedAt) || "N/A"}
               </td>
               <td className="py-2 px-4 border border-gray-300">
                 {tab.customer}
@@ -89,6 +102,7 @@ export default function HistoricoPage() {
             closeTabDetailsAction={() => setSelectedTab(null)}
             tableNumber={selectedTab.tableNumber}
             tab={selectedTab}
+            fetchTabs={fetchTabs}
           />
         )}
       </div>
