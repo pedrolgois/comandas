@@ -67,31 +67,41 @@ export function AddProductModal({
                 <button
                   onClick={() =>
                     setProductsAmmount((prev) => {
-                      const productIndex = prev.findIndex(
-                        (productAmmount) => productAmmount.id === product.id
-                      );
-                      const newProductsAmmount = [...prev];
-                      if (newProductsAmmount[productIndex].ammount === 0)
-                        return newProductsAmmount;
-                      newProductsAmmount[productIndex].ammount -= 1;
+                      const newProductsAmmount = prev.map((productAmmount) => {
+                        if (
+                          productAmmount.id === product.id &&
+                          productAmmount.ammount > 0
+                        ) {
+                          return {
+                            ...productAmmount,
+                            ammount: productAmmount.ammount - 1,
+                          };
+                        }
+                        return productAmmount;
+                      });
                       return newProductsAmmount;
                     })
                   }
-                  className="rounded-full border border-system-black w-8 h-8 grid place-items-center "
+                  className="rounded-full border border-system-black w-8 h-8 grid place-items-center"
                 >
                   <span className="text-4xl relative top-[-7px]">-</span>
                 </button>
+
                 <span className="text-lg font-semibold">
                   {productAmmount?.ammount ?? "0"}
                 </span>
                 <button
                   onClick={() =>
                     setProductsAmmount((prev) => {
-                      const productIndex = prev.findIndex(
-                        (productAmmount) => productAmmount.id === product.id
-                      );
-                      const newProductsAmmount = [...prev];
-                      newProductsAmmount[productIndex].ammount += 1;
+                      const newProductsAmmount = prev.map((productAmmount) => {
+                        if (productAmmount.id === product.id) {
+                          return {
+                            ...productAmmount,
+                            ammount: productAmmount.ammount + 1,
+                          };
+                        }
+                        return productAmmount;
+                      });
                       return newProductsAmmount;
                     })
                   }

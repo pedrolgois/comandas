@@ -57,6 +57,33 @@ export function TabDetails({
 
   const tabTotal = tab?.total ? tab.total.toFixed(2) : "0.00";
 
+  if (tableNumber === 0 || !tab) {
+    return null;
+  }
+
+  if (tab.status !== "active") {
+    return (
+      <div
+        className={`bg-system-grey1 p-4 h-screen w-[600px] min-w-[600px] flex flex-col fixed right-0 top-0 bottom-0 translate-x-full transition-transform duration-300`}
+      >
+        <button
+          onClick={closeTabDetailsAction}
+          className="ml-auto block hover:bg-system-grey2 p-2 rounded"
+        >
+          <CloseIcon />
+        </button>
+        <span className="text-md font-bold text-black">
+          Mesa {String(tableNumber).padStart(2, "0")}
+        </span>
+        <div className="mt-4">
+          <span className="text-black">
+            Esta mesa não tem uma comanda ativa.
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div

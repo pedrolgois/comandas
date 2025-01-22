@@ -1,7 +1,7 @@
 export type Tab = {
   id: string;
   customer: string;
-  status: "active" | "paid" | "cancelled" | "pending";
+  status: "active" | "closed" | "cancelled" | "pending";
   tableNumber: number;
   items: {
     id: string;
