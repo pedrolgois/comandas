@@ -4,6 +4,7 @@ interface ButtonProps {
   disabled?: boolean;
   color?: string;
   action?: () => void;
+  onClick?: () => void;
 }
 
 export function Button({

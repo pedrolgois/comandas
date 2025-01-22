@@ -25,7 +25,7 @@ export function ProductCard(props: ProductCardProps) {
           {props.product.name}
         </span>
         <span className="text-base font-normal text-black">
-          R$ {props.product.price}
+          R$ {Number(props.product.price).toFixed(2)}
         </span>
       </div>
     </div>
